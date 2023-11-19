@@ -13,13 +13,19 @@ public class ReverseLinkedList {
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        //接受键盘输入
         String str = sc.nextLine();
+        //以空格分割为数组
         String[] arr = str.split(" ");
-
+        //创建一个类对象
         ReverseLinkedList owner = new ReverseLinkedList();
+        //构造链表
         ListNode head = owner.cresteListNode(arr);
+        //打印反转之前的链表
         owner.printListNode(head);
+        //反转链表
         ListNode  re = owner.reverse(head);
+        //打印反转之后的链表
         owner.printListNode(re);
     }
     //构造链表
