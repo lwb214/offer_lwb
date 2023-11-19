@@ -3,7 +3,7 @@ package linkedList;
 import java.util.*;
 public class ReverseLinkedList {
     //节点类
-    class ListNode{
+    static class ListNode{
         public int val;
         public ListNode next;
         public ListNode(int val){
@@ -17,19 +17,17 @@ public class ReverseLinkedList {
         String str = sc.nextLine();
         //以空格分割为数组
         String[] arr = str.split(" ");
-        //创建一个类对象
-        ReverseLinkedList owner = new ReverseLinkedList();
         //构造链表
-        ListNode head = owner.cresteListNode(arr);
+        ListNode head = cresteListNode(arr);
         //打印反转之前的链表
-        owner.printListNode(head);
+        printListNode(head);
         //反转链表
-        ListNode  re = owner.reverse(head);
+        ListNode  after = reverse(head);
         //打印反转之后的链表
-        owner.printListNode(re);
+        printListNode(after);
     }
     //构造链表
-    public  ListNode cresteListNode(String[] arr){
+    public  static ListNode cresteListNode(String[] arr){
         //虚拟哨兵节点
         ListNode dummy = new ListNode(-1);
         //当前指针
@@ -46,7 +44,7 @@ public class ReverseLinkedList {
         return dummy.next;
     }
     //输出链表
-    public void printListNode(ListNode head){
+    public static void printListNode(ListNode head){
         while (head !=null){
             System.out.print(head.val + "->");
             head = head.next;
@@ -55,7 +53,7 @@ public class ReverseLinkedList {
         System.out.println();
     }
     //反转链表
-    public  ListNode reverse(ListNode head){
+    public static ListNode reverse(ListNode head){
         ListNode cur = head;
         ListNode pre = null;
         while (cur != null){
@@ -63,6 +61,7 @@ public class ReverseLinkedList {
             ListNode temp = cur.next;
             cur.next = pre;
             //pre和cur都向后移动
+            //必须先移pre再移cur【若cur先移的话，pre和cur都会移动到temp的位置】
             pre = cur;
             cur = temp;
         }
