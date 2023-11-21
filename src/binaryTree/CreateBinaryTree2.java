@@ -47,7 +47,6 @@ public class CreateBinaryTree2 {
             if (node != null) {
                 //线性存储转换链式存储关键
                 node.left = list.get(2 * i + 1);
-
                 if (2 * i + 2 < num.length) {
                     node.right = list.get(2 * i + 2);
                 }
