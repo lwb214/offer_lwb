@@ -1,10 +1,10 @@
 package greedy;
 
 import java.util.Arrays;
-
+//分发饼干
 public class DistributeCookie {
     public static void main(String[] args) {
-        int[] g = {7,11};
+        int[] g = {3,7,11};
         int[] s = {1,3,5,9,10};
 
         int ans = distributeCookie(g,s);

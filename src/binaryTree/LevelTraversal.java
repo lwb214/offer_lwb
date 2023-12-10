@@ -1,11 +1,9 @@
 package binaryTree;
 
-
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class LevelTraversal {
     //层序遍历二叉树
@@ -71,13 +69,13 @@ public class LevelTraversal {
         List<List<Integer>> lists = new ArrayList<>();
         if(root == null) return lists;
         //借助队列
-        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedBlockingDeque<>();
         queue.offer(root);
 
         while (!queue.isEmpty()){
             //一维数组
             List<Integer> list = new ArrayList<>();
-            //*记录数组的长度【很重要】
+            //*记录队列的长度【很重要】
             int size = queue.size();
             while (size > 0){
                 TreeNode node = queue.poll();

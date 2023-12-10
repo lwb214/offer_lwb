@@ -1,8 +1,8 @@
 package greedy;
-
+//求最大子序和
 public class MaxSuborderSum {
     public static void main(String[] args) {
-        int [] num = {2,-1,-3,4,-1,3,2,-7};
+        int [] num = {-2,1,-3,4,-1,2,1,-5,4};
         int ans = maxSuborderSum(num);
         System.out.println(ans);
     }
