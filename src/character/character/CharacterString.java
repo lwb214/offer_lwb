@@ -1,4 +1,4 @@
-package otherPractice;
+package character.character;
 import java.util.*;
 public class CharacterString {
     /*
