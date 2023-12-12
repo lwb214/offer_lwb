@@ -7,6 +7,7 @@ import java.util.Scanner;
     输出：g f e d c b a
  */
 public class ReverseCharacter {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
