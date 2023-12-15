@@ -1,4 +1,4 @@
-package character.character;
+package character;
 import java.util.*;
 public class CharacterString {
     /*

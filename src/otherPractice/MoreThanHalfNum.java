@@ -1,6 +1,6 @@
 package otherPractice;
-
 import java.util.*;
+//输出数组中出现次树超过数组一半的数
 public class MoreThanHalfNum{
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -15,7 +15,7 @@ public class MoreThanHalfNum{
     }
 
     private static int MoreThanHalfNum_Solution(int[] numbers) {
-        //哈希表
+        //哈希表【键：数字|值：出现的次数】
         HashMap<Integer,Integer> mp = new HashMap<>();
         //遍历数组
         for(int i=0;i<numbers.length;i++){
