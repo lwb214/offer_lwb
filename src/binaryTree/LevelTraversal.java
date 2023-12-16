@@ -43,15 +43,21 @@ public class LevelTraversal {
                 root = node;
             }
         }
-        for (int i = 0; 2 * i + 1 < arr.length; i++) {
-            TreeNode node = list.get(i);
-            if (i < arr.length) {
-                node.left = list.get(2 * i + 1);
-                if (2 * i + 2 < arr.length) {
-                    node.right = list.get(2 * i + 2);
-                }
-            }
-        }
+       try{
+           for (int i = 0; 2 * i + 1 < arr.length; i++) {
+               TreeNode node = list.get(i);
+               if (i < arr.length) {
+                   node.left = list.get(2 * i + 1);
+                   if (2 * i + 2 < arr.length) {
+                       node.right = list.get(2 * i + 2);
+                   }
+               }
+           }
+       }catch (Exception e){
+           System.out.print("请您检查输入的二叉树是否正确");
+           e.printStackTrace();
+           return null;
+       }
         return root;
     }
     //先序打印二叉树【递归】
@@ -75,13 +81,15 @@ public class LevelTraversal {
         while (!queue.isEmpty()){
             //一维数组
             List<Integer> list = new ArrayList<>();
-            //*记录队列的长度【很重要】
+            //记录队列的长度【很重要】
             int size = queue.size();
             while (size > 0){
                 TreeNode node = queue.poll();
                 list.add(node.val);
-                if (node.left != null) queue.offer(node.left);
-                if (node.right != null) queue.offer(node.right);
+                if (node.left != null)
+                    queue.offer(node.left);
+                if (node.right != null)
+                    queue.offer(node.right);
                 size--;
             }
             lists.add(list);

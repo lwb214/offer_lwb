@@ -1,13 +1,15 @@
 package binaryTree;
 
 import java.util.Scanner;
-
+/*
+    反转二叉树
+ */
 public class TraversalBinaryTree {
     class TreeNode{
-        String val;
+        Integer val;
         TreeNode left;
         TreeNode right;
-        public TreeNode(String val){
+        public TreeNode(Integer val){
             this.val = val;
         }
     }
