@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 public class NonRecursiveTraversal {
-    //使用迭代法实现先序遍历二叉树
+    //使用迭代法实现先序遍历二叉树【非递归】
 
     //节点类
     static class TreeNode {
@@ -32,7 +32,7 @@ public class NonRecursiveTraversal {
         TreeNode root = null;
         for (int i = 0; i < arr.length; i++) {
             TreeNode node = null;
-            if (arr[i] != null) {
+            if (arr[i] != "null") {
                 node = new TreeNode(arr[i]);
             }
             list.add(node);

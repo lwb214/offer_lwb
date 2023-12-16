@@ -3,8 +3,8 @@ package character;
 import java.util.Scanner;
 /*
     反转字符串
-    输入：abcdefg
-    输出：gfedcba
+    输入：君不见黄河之水天上来
+    输出：来上天水之河黄见不君
  */
 public class ReverseCharacter {
     public static void main(String[] args) {
