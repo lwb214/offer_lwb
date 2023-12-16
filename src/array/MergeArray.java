@@ -1,4 +1,4 @@
-package otherPractice;
+package array;
 
 import java.util.*;
 public class MergeArray {

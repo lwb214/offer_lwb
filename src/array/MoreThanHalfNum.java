@@ -1,4 +1,4 @@
-package otherPractice;
+package array;
 import java.util.*;
 //输出数组中出现次树超过数组一半的数
 public class MoreThanHalfNum{
