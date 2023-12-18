@@ -1,7 +1,7 @@
 package otherPractice.singletonPattern;
 
 public class Singleton2 {
-    //恶汉式
+    //饿汉式
     public static class HungryMan{
         public static Singleton2 hungryMan = new Singleton2();
     }
