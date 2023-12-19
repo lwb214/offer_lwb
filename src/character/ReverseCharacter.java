@@ -17,6 +17,7 @@ public class ReverseCharacter {
     static StringBuilder reverse(String arr){
             int n = arr.length();
             //用StringBuffer编辑字符串
+            //双指针解法，左右两边各一个指针，进行交换
             StringBuilder sb  =new StringBuilder(arr);
         for (int i = 0,j = n-1; i < n/2; i++,j--) {
             char  temp = arr.charAt(i);
