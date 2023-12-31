@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 //全排列
+//输出123，所有的可能的组合：123，132，213，231，312，321
 public class FullPermutation {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
