@@ -32,16 +32,20 @@ public class MergeSort {
     public static int[] merge(int[] arr,int start,int start2,int end){
         int len1 = start2 - start;
         int [] temp = new int[len1];
-        System.arraycopy(arr,0,temp,0,len1);
+
+        System.arraycopy(arr,start,temp,0,len1);
+
         int p1 = 0;
         int p2 = start2;
         for (int i = start; i <= end; i++) {
             if(temp[p1] <= arr[p2]){
                 arr[i] = temp[p1];
+                p1++;
                 if(p1 == len1)
                     break;
             }else {
                 arr[i] = arr[p2];
+                p2++;
                 if(p2 > end){
                     while (p1 < len1){
                         i++;
@@ -51,8 +55,6 @@ public class MergeSort {
                 }
             }
         }
-
-        System.arraycopy(temp,0,arr,0,temp.length);
         return arr;
     }
 }
