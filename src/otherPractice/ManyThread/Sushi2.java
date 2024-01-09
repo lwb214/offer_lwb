@@ -30,18 +30,20 @@ public class Sushi2 {
         }
         @Override
         public void run(){
-               while (true){
-                   if ( curNum.get() == zhuanpanMax){
-                       try {
-                           System.out.println("转盘上寿司满了,休息10秒" + System.currentTimeMillis());
-                           Thread.sleep(1000 * 10);
-                       } catch (InterruptedException e) {
-                           e.printStackTrace();
-                       }
-                   }else {
-                       make();
-                   }
-               }
+                while (true){
+                    if ( curNum.get() >= zhuanpanMax){
+                        try {
+                            System.out.println("转盘上寿司满了,厨师休息10秒" + System.currentTimeMillis());
+                            Thread.sleep(1000 * 10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        synchronized (Cook.class){
+                                make();
+                        }
+                    }
+                }
         }
     }
     static class Diners implements Runnable{
@@ -50,15 +52,15 @@ public class Sushi2 {
             this.username = username;
         }
         public void eat() throws InterruptedException {
-            System.out.println(username + "吃一块寿司,还剩" + curNum.get() );
             curNum.decrementAndGet();
+            System.out.println(username + "吃一块寿司,还剩" + curNum.get());
             Thread.sleep(1000);
         }
         @Override
         public void run(){
                 while (true){
                     if (curNum.get() <= 0){
-                        System.out.println("没有寿司了,休息10秒" + System.currentTimeMillis());
+                        System.out.println("没有寿司了,客人休息10秒" + System.currentTimeMillis());
                         try {
                             Thread.sleep(1000 * 10);
                         } catch (InterruptedException e) {
@@ -66,7 +68,9 @@ public class Sushi2 {
                         }
                     }else {
                         try {
-                            eat();
+                            synchronized (Diners.class){
+                                eat();
+                            }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
