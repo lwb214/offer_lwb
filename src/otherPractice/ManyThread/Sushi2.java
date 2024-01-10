@@ -10,72 +10,85 @@ public class Sushi2 {
      每位食客每秒吃掉一个寿司(不考虑吃饱的情况)，如果转盘上没有寿司就会休息10秒后再次尝试吃.请以面向对象的编程思想，抽象上面的内容为生产者消费者模式编码。
      要求使用多线程实现(可以用线程池，也可以不用*/
     //转盘的最大容量10
-    static int zhuanpanMax = 10;
-    //当前寿司数量
-    static AtomicInteger curNum = new AtomicInteger(0);
     public static void main(String[] args) throws InterruptedException {
         //线程池做法
-        ThreadPoolExecutor pool = new ThreadPoolExecutor(5,7,30, TimeUnit.SECONDS,new LinkedBlockingDeque<>());
-        Cook cook = new Cook();
-        Diners d1 = new Diners("客人1");
-        Diners d2 = new Diners("客人2");
-        Diners d3 = new Diners("客人3");
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(3,3,30, TimeUnit.MICROSECONDS,new LinkedBlockingDeque<>());
+        EnjoySpace enjoySpace = new EnjoySpace();
+        Thread cook = new Cook(enjoySpace);cook.setName("cook");
+        Thread d1 = new Diners(enjoySpace);d1.setName("客人1");
+        Thread d2 = new Diners(enjoySpace);d2.setName("客人2");
+        Thread d3 = new Diners(enjoySpace);d3.setName("客人3");
+        //提交任务
         pool.submit(cook);pool.submit(d1);pool.submit(d2);pool.submit(d3);
+        //关闭线程池
         pool.shutdown();
     }
-    static class Cook implements Runnable{
-        public void make(){
-            curNum.incrementAndGet();
-            System.out.println("厨师做一块寿司,已经做了"+ curNum.get());
+     static class EnjoySpace{
+        static final int plateMax = 10;
+        //当前寿司数量
+       static AtomicInteger curNum = new AtomicInteger(0);
+
+        public synchronized void make() throws InterruptedException {
+            if (curNum.get() >= plateMax){
+                System.out.println("转盘上寿司满了,厨师休息10秒" + System.currentTimeMillis());
+                this.wait(1000 * 10);
+            }else {
+                curNum.incrementAndGet();
+                System.out.println("厨师做一块寿司,做了"+ curNum.get());
+                this.notifyAll();
+            }
         }
-        @Override
-        public void run(){
-                while (true){
-                    if ( curNum.get() >= zhuanpanMax){
-                        try {
-                            System.out.println("转盘上寿司满了,厨师休息10秒" + System.currentTimeMillis());
-                            Thread.sleep(1000 * 10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }else {
-                        synchronized (Cook.class){
-                                make();
-                        }
-                    }
-                }
+
+        public synchronized void eat() throws InterruptedException {
+            if (curNum.get() <= 0){
+                System.out.println("没有寿司了,客人" + Thread.currentThread().getName()+ "休息10秒" + System.currentTimeMillis());
+                this.wait(1000 * 10);
+            }else {
+                curNum.decrementAndGet();
+                System.out.println(Thread.currentThread().getName() + "吃一块寿司,还剩" + curNum.get());
+                TimeUnit.SECONDS.sleep(1);
+                this.notifyAll();
+            }
         }
     }
-    static class Diners implements Runnable{
-        String username;
-        public Diners(String username) {
-            this.username = username;
+    static class Cook extends Thread{
+        private final EnjoySpace enjoySpace;
+        Cook(EnjoySpace enjoySpace) {
+            this.enjoySpace = enjoySpace;
         }
-        public void eat() throws InterruptedException {
-            curNum.decrementAndGet();
-            System.out.println(username + "吃一块寿司,还剩" + curNum.get());
-            Thread.sleep(1000);
+
+        @Override
+        public void run(){
+            try {
+                produce();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        private void produce() throws InterruptedException {
+            while (true){
+                enjoySpace.make();
+            }
+        }
+    }
+    static class Diners extends Thread{
+        private final EnjoySpace enjoySpace;
+        public Diners(EnjoySpace enjoySpace){
+            this.enjoySpace = enjoySpace;
         }
         @Override
         public void run(){
-                while (true){
-                    if (curNum.get() <= 0){
-                        System.out.println("没有寿司了,客人休息10秒" + System.currentTimeMillis());
-                        try {
-                            Thread.sleep(1000 * 10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }else {
-                        try {
-                            synchronized (Diners.class){
-                                eat();
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+            try {
+                consume();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private void consume() throws InterruptedException {
+            while (true){
+                enjoySpace.eat();
+            }
         }
     }
 }

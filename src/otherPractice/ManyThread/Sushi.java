@@ -1,5 +1,6 @@
 package otherPractice.ManyThread;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Sushi {
@@ -10,64 +11,65 @@ public class Sushi {
     public static void main(String[] args) throws InterruptedException {
         EnjoySpace enjoySpace = new EnjoySpace();
         Thread cook = new Cook(enjoySpace);
-        Thread d1 = new Diners( enjoySpace);d1.setName("客人1");
-        Thread d2 = new Diners( enjoySpace);d2.setName("客人2");
-        Thread d3 = new Diners( enjoySpace);d3.setName("客人3");
+        Thread d1 = new Diners(enjoySpace);d1.setName("客人1");
+        Thread d2 = new Diners(enjoySpace);d2.setName("客人2");
+        Thread d3 = new Diners(enjoySpace);d3.setName("客人3");
         cook.start();
         d1.start();
         d2.start();
         d3.start();
     }
-}
-class EnjoySpace{
-    static final int zhuanpanMax = 10;
-    //当前寿司数量
-    static AtomicInteger curNum = new AtomicInteger(0);
 
-    public synchronized void make() throws InterruptedException {
-        if (curNum.get() >= zhuanpanMax){
-            System.out.println("转盘上寿司满了,休息10秒" + System.currentTimeMillis());
-            this.wait(1000 * 10);
-        }else {
-            curNum.incrementAndGet();
-            System.out.println("厨师做一块寿司,做了"+ curNum.get());
-            this.notifyAll();
+   static class EnjoySpace{
+        static final int plateMax = 10;
+        //当前寿司数量
+        static AtomicInteger curNum = new AtomicInteger(0);
+
+        public synchronized void make() throws InterruptedException {
+            if (curNum.get() >= plateMax){
+                System.out.println("转盘上寿司满了,厨师休息10秒" + System.currentTimeMillis());
+                this.wait(1000 * 10);
+            }else {
+                curNum.incrementAndGet();
+                System.out.println("厨师做一块寿司,做了"+ curNum.get());
+                this.notifyAll();
+            }
+        }
+
+        public synchronized void eat() throws InterruptedException {
+            if (curNum.get() <= 0){
+                System.out.println("没有寿司了" + Thread.currentThread().getName()+ "休息10秒" + System.currentTimeMillis());
+                this.wait(1000 * 10);
+            }else {
+                curNum.decrementAndGet();
+                System.out.println(Thread.currentThread().getName() + "吃一块寿司,还剩" + curNum.get());
+                Thread.sleep(1000);
+                this.wait(1);
+                this.notifyAll();
+            }
         }
     }
-
-    public synchronized void eat() throws InterruptedException {
-        if (curNum.get() <= 0){
-            System.out.println("没有寿司了,客人休息10秒" + System.currentTimeMillis());
-            this.wait(1000 * 10);
-        }else {
-            curNum.decrementAndGet();
-            System.out.println(Thread.currentThread().getName() + "吃一块寿司,还剩" + curNum.get());
-            this.wait(1000);
-            this.notify();
+   static class Cook extends Thread{
+        private final EnjoySpace enjoySpace;
+        Cook(EnjoySpace enjoySpace) {
+            this.enjoySpace = enjoySpace;
         }
-    }
-}
-class Cook extends Thread{
-    private final EnjoySpace enjoySpace;
-    Cook(EnjoySpace enjoySpace) {
-        this.enjoySpace = enjoySpace;
-    }
 
-    @Override
+        @Override
         public void run(){
-        try {
-            produce();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            try {
+                produce();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-    private void produce() throws InterruptedException {
+        private void produce() throws InterruptedException {
             while (true){
                 enjoySpace.make();
             }
+        }
     }
-}
-class Diners extends Thread{
+   static class Diners extends Thread{
         private final EnjoySpace enjoySpace;
         public Diners(EnjoySpace enjoySpace){
             this.enjoySpace = enjoySpace;
@@ -80,11 +82,12 @@ class Diners extends Thread{
                 throw new RuntimeException(e);
             }
         }
-
-    private void consume() throws InterruptedException {
+        private void consume() throws InterruptedException {
             while (true){
                 enjoySpace.eat();
             }
+        }
     }
+
 }
 
