@@ -1,6 +1,5 @@
 package otherPractice.ManyThread;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Sushi {
@@ -32,7 +31,6 @@ public class Sushi {
             }else {
                 curNum.incrementAndGet();
                 System.out.println("厨师做一块寿司,做了"+ curNum.get());
-                this.notifyAll();
             }
         }
 
@@ -43,9 +41,7 @@ public class Sushi {
             }else {
                 curNum.decrementAndGet();
                 System.out.println(Thread.currentThread().getName() + "吃一块寿司,还剩" + curNum.get());
-                Thread.sleep(1000);
-                this.wait(1);
-                this.notifyAll();
+                this.wait(1000);
             }
         }
     }
