@@ -1,7 +1,7 @@
 package character;
 import java.util.Scanner;
 /*
-最长回文字串
+最长回文子串
  */
 public class LongestPalindromicSubstring {
     public static void main(String[] args) {
