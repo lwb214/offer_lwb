@@ -7,8 +7,8 @@ public class QuickSort {
         int[] arr = {9, 5, 7, 32, 3, 6, 8, 14, 2, 55, 21, 32, 1};
         quickSort(arr, 0, arr.length - 1);
         ArrayList ans = new ArrayList();
-        for (int i = 0; i < arr.length; i++) {
-            ans.add(arr[i]);
+        for (int j : arr) {
+            ans.add(j);
         }
         System.out.println(ans);
     }
