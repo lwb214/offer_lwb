@@ -25,18 +25,22 @@ public class MergeSort {
             return;
         }
         int mid = (start + end)/2;
+        //递归拆分数组
         sortLoop(arr,start,mid);
         sortLoop(arr,mid+1,end);
+        //两两合并数组
         merge(arr,start,mid+1,end);
     }
     public static int[] merge(int[] arr,int start,int start2,int end){
         int len1 = start2 - start;
         int [] temp = new int[len1];
-
+        //将左数组赋值给临时数组
         System.arraycopy(arr,start,temp,0,len1);
-
+        //左数组当前索引
         int p1 = 0;
+        //右数组当前索引
         int p2 = start2;
+        //合并左右数组
         for (int i = start; i <= end; i++) {
             if(temp[p1] <= arr[p2]){
                 arr[i] = temp[p1];

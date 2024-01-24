@@ -39,30 +39,29 @@ public class MultiThreadSort {
         latch.await();
 
         // 合并排序结果
-        merge(arr, threadCount);
+        merge(arr, threadCount,blockSize);
 
         // 输出排序结果
         System.out.println(Arrays.toString(arr));
     }
 
     // 合并排序结果
-    private static void merge(int[] arr, int threadCount) {
+    private static void merge(int[] arr, int threadCount,int blockSize) {
         int[] temp = new int[arr.length];
-        //得到每个线程所要处理的块的大小
-        //Math.ceil()函数，返回大于等于指定参数的最小整数[双精度类型]
-        int blockSize = (int) Math.ceil((double) arr.length / threadCount);
         //临时数组temp索引
         int index = 0;
         //存放每个子数组当前的索引位置
-        int[] indexes = new int[threadCount];
+        int[] sonIndexes = new int[threadCount];
 
         while (index < arr.length) {
+            //最小的索引
             int minIndex = -1;
+            //当前所有块中的最小值
             int minValue = Integer.MAX_VALUE;
 
             // 找到当前各个块中的最小值
             for (int i = 0; i < threadCount; i++) {
-                int start = i * blockSize + indexes[i];
+                int start = i * blockSize + sonIndexes[i];
                 int end = Math.min((i + 1) * blockSize, arr.length);
 
                 if (start < end && arr[start] < minValue) {
@@ -72,11 +71,12 @@ public class MultiThreadSort {
             }
 
             if (minIndex != -1) {
+                //将最小值赋值给临时数组
                 temp[index] = minValue;
                 //临时数组索引右移一位
                 index++;
                 //每个子数组的索引右移一位
-                indexes[minIndex]++;
+                sonIndexes[minIndex]++;
             }
         }
 
