@@ -56,7 +56,7 @@ public class MultiThreadSort {
         while (index < arr.length) {
             //最小的索引
             int minIndex = -1;
-            //当前所有块中的最小值
+            //当前所有块中的最小值【
             int minValue = Integer.MAX_VALUE;
 
             // 找到当前各个块中的最小值

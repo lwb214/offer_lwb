@@ -6,10 +6,10 @@ import java.util.concurrent.ThreadLocalRandom;
 //归并排序
 public class MergeSort {
     public static void main(String[] args) {
-        int[] arr = {2,3,5,6,7,0,1,8,9,4};
-//        for (int i = 0; i < 10; i++) {
-//            arr[i] = ThreadLocalRandom.current().nextInt(0,10);
-//        }
+        int[] arr = new int[10];
+        for (int i = 0; i < 10; i++) {
+            arr[i] = ThreadLocalRandom.current().nextInt(0,50);
+        }
         System.out.println(Arrays.toString(arr));
 
         sort(arr);
@@ -25,7 +25,7 @@ public class MergeSort {
             return;
         }
         int mid = (start + end)/2;
-        //递归拆分数组
+        //递归两两拆分数组
         sortLoop(arr,start,mid);
         sortLoop(arr,mid+1,end);
         //两两合并数组
@@ -45,11 +45,13 @@ public class MergeSort {
             if(temp[p1] <= arr[p2]){
                 arr[i] = temp[p1];
                 p1++;
+            //左数组遍历完成，结束
                 if(p1 == len1)
                     break;
             }else {
                 arr[i] = arr[p2];
                 p2++;
+                //右数组合并完了，左数组没有合并完的情况，把左数组依次直接放到已经合并好的数组后面
                 if(p2 > end){
                     while (p1 < len1){
                         i++;
