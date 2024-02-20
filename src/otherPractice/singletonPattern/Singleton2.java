@@ -8,5 +8,4 @@ public class Singleton2 {
     public Singleton2 singleton2(){
         return HungryMan.hungryMan;
     }
-
 }
