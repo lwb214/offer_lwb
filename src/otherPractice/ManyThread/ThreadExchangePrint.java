@@ -4,14 +4,14 @@ package otherPractice.ManyThread;
  */
 public class ThreadExchangePrint {
     public static void main(String[] args) throws InterruptedException {
-        for (int i = 0; i < 10 ; i++) {
+        for (int i = 0; i < 10; i++) {
             Thread a = new Thread(new PrintABC(null),"A");
             Thread b = new Thread(new PrintABC(a),"B");
             Thread c = new Thread(new PrintABC(b),"C");
             a.start();
             b.start();
             c.start();
-            Thread.sleep(10);
+//            Thread.sleep(10);
         }
     }
     static class PrintABC implements Runnable{
