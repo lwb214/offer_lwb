@@ -4,7 +4,7 @@ import java.util.*;
 public class ReverseLinkedList {
     //节点类
     static class ListNode{
-        public int val;
+        public Integer val;
         public ListNode next;
         public ListNode(int val){
             this.val = val;
@@ -18,7 +18,7 @@ public class ReverseLinkedList {
         //以空格分割为数组
         String[] arr = str.split(" ");
         //构造链表
-        ListNode head = cresteListNode(arr);
+        ListNode head = createLinkedNode(arr);
         //打印反转之前的链表
         printListNode(head);
         //反转链表
@@ -27,7 +27,7 @@ public class ReverseLinkedList {
         printListNode(after);
     }
     //构造链表
-    public  static ListNode cresteListNode(String[] arr){
+    public  static ListNode createLinkedNode(String[] arr){
         //虚拟哨兵节点
         ListNode dummy = new ListNode(-1);
         //当前指针
@@ -53,7 +53,7 @@ public class ReverseLinkedList {
         System.out.println();
     }
     //反转链表
-    public static ListNode reverse(ListNode head){
+    private static ListNode reverse(ListNode head){
         ListNode cur = head;
         ListNode pre = null;
         while (cur != null){

@@ -40,6 +40,6 @@ public class MinStack {
         min.pop();
         min.pop();
         int ans = min.getMin();
-        System.out.println(ans);
+        System.out.println("当前栈内最小值:" + ans);
     }
 }
