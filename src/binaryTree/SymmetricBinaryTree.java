@@ -17,7 +17,7 @@ public class SymmetricBinaryTree {
     public static void main(String[] args){
         // Scanner sc = new Scanner(System.in);
         // String str = sc.next();
-        String str = "1 2 2 3 3 null null";
+        String str = "1 2 2 3 3 4 4";
         String[] arr = str.split(" ");
         TreeNode root = createBinaryTree(arr);
         printBinaryTree(root);
