@@ -3,7 +3,7 @@ package character;
 import java.util.Scanner;
 
 /*
-  找寻两个二叉树的最长公共字串
+  找寻两个字符串的最长公共子串
 */
 public class LongestPublicChar {
     public static void main(String[] args) {
