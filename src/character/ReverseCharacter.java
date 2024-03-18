@@ -9,10 +9,11 @@ import java.util.Scanner;
 public class ReverseCharacter {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-
+//        String str = sc.nextLine();
+        String str = "君不见黄河之水天上来";
+        System.out.println("原字符串： "+str);
         StringBuilder sb = reverse(str);
-        System.out.println(sb);
+        System.out.println("反转后字符串："+sb);
     }
     static StringBuilder reverse(String arr){
             int n = arr.length();
