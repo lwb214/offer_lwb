@@ -7,10 +7,10 @@ import java.util.Scanner;
 public class CreateBinaryTree {
     //节点类
     static class TreeNode{
-        String val;
         TreeNode left;
         TreeNode right;
-        public TreeNode(String val){
+        Integer val;
+        TreeNode(Integer val){
             this.val = val;
         }
     }
@@ -26,29 +26,25 @@ public class CreateBinaryTree {
        printBinaryTree(root);
     }
     //构造二叉树
-    public static TreeNode createBinaryTree(String[] num){
-        //创建一个和数组相同大小的集合
-        List<TreeNode> list = num.length == 0 ? null : new ArrayList<>(num.length);
+    public static TreeNode createBinaryTree(String[] arr){
+        ArrayList<TreeNode> list = new ArrayList<>();
         TreeNode root = null;
-        //讲数组元素转化为树节点，加入集合
-        for (int i = 0; i < num.length; i++) {
+        for(int i=0;i<arr.length;i++){
             TreeNode node = null;
-            if(num[i] != "null"){
-                node = new TreeNode(num[i]);
+            if(!arr[i].equals("null")){
+                node = new TreeNode(Integer.parseInt(arr[i]));
             }
             list.add(node);
             if(i == 0){
                 root = node;
             }
         }
-        //将集合中的元素变换为二叉树
-        for (int i = 0; 2*i+1<num.length ; i++) {
+        for(int i=0;2*i+1<arr.length;i++){
             TreeNode node = list.get(i);
-            if (node != null) {
-                //线性存储转换链式存储关键
-                node.left = list.get(2 * i + 1);
-                if (2 * i + 2 < num.length) {
-                    node.right = list.get(2 * i + 2);
+            if(i < list.size()){
+                node.left = list.get(2*i+1);
+                if(2*i+2 < arr.length){
+                    node.right = list.get(2*i+2);
                 }
             }
         }
