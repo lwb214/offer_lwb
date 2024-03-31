@@ -25,12 +25,14 @@ public class Sushi {
         static AtomicInteger curNum = new AtomicInteger(0);
 
         public synchronized void make() throws InterruptedException {
-            if (curNum.get() >= plateMax){
-                System.out.println("转盘上寿司满了,厨师休息10秒" + System.currentTimeMillis());
-                this.wait(1000 * 10);
-            }else {
-                curNum.incrementAndGet();
-                System.out.println("厨师做一块寿司,做了"+ curNum.get());
+            while(true){
+                if (curNum.get() >= plateMax){
+                    System.out.println("转盘上寿司满了,厨师休息10秒" + System.currentTimeMillis());
+                    this.wait(1000 * 10);
+                }else {
+                    curNum.incrementAndGet();
+                    System.out.println("厨师做一块寿司,做了"+ curNum.get());
+                }
             }
         }
 
